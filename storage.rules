@@ -1,0 +1,21 @@
+rules_version = '2';
+
+// Photos, transfer letters and family-card copies.
+// Only people with a role in the register can read or upload; files are never overwritten.
+service firebase.storage {
+  match /b/{bucket}/o {
+    function role() {
+      return firestore.exists(/databases/(default)/documents/users/$(request.auth.uid))
+        ? firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role : 'none';
+    }
+    function member() { return request.auth != null && (role() == 'admin' || role() == 'staff'); }
+
+    match /uploads/{id} {
+      allow read: if member();
+      allow create: if member()
+        && request.resource.size < 20 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*|application/pdf');
+      allow update, delete: if false;
+    }
+  }
+}

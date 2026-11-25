@@ -1,0 +1,4 @@
+Third-party libraries bundled with the Parish Family Register:
+- Firebase JavaScript SDK 10.12.2 (compat builds) — Apache License 2.0 — https://github.com/firebase/firebase-js-sdk
+- jsPDF 2.5.1 — MIT License — https://github.com/parallax/jsPDF
+- QRCode.js 1.0.0 — MIT License — https://github.com/davidshimjs/qrcodejs
